@@ -30,7 +30,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           W=$(date -u +%G-%V)
-          FILES="data/changes/$W.csv data/changes/$W.json data/$W.json"
+          mkdir -p dist
+          cp "data/changes/$W.csv" "dist/changes-$W.csv"; cp "data/changes/$W.json" "dist/changes-$W.json"; cp "data/$W.json" "dist/snapshot-$W.json"
+          FILES="dist/changes-$W.csv dist/changes-$W.json dist/snapshot-$W.json"
           if gh release view "week-$W" > /dev/null 2>&1; then
             gh release edit "week-$W" --notes-file release-notes.md
             gh release upload "week-$W" $FILES --clobber
