@@ -1,5 +1,7 @@
 # Sanctions weekly
 
+[![sanctions lists](https://intel.unicornprivate.com/badge/sanctions-check.svg?date=auto)](https://intel.unicornprivate.com/sanctions/today/?src=badge)
+
 Weekly open dataset of **new entries on official sanctions lists**, aggregated by country and list. Counts only, no names.
 
 **Run a free test on all your contacts now and find out if there are any compliance issues.**
@@ -12,6 +14,15 @@ Weekly open dataset of **new entries on official sanctions lists**, aggregated b
 
 Fields: `period` (from, to), `totalNewEntries`, `days` (new entries per day), `byCountry` (country code to list to count),
 `byList` (list to count), `lists` (list names and source URLs when available), `generatedAt`.
+
+## Weekly changes
+
+Every Monday the workflow also compares the new snapshot with the previous week, by country and list:
+
+- `data/changes/YYYY-WW.csv`: columns `country`, `list`, `thisWeek`, `previousWeek`, `change`.
+- `data/changes/YYYY-WW.json`: the same rows plus weekly totals and the change.
+
+Each week is also published as a GitHub Release "Week YYYY-WW" with the files attached and a short summary.
 
 ## Source
 

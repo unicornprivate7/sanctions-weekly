@@ -16,6 +16,8 @@ jobs:
           curl -fsS https://intel.unicornprivate.com/api/public/sanctions-weekly -o data/latest.json
           python3 -m json.tool data/latest.json > /dev/null
           cp data/latest.json "data/$(date -u +%G-%V).json"
+      - name: Weekly changes
+        run: python3 scripts/changes.py "$(date -u +%G-%V)"
       - name: Commit
         run: |
           git config user.name "github-actions[bot]"
@@ -23,3 +25,15 @@ jobs:
           git add data
           git diff --cached --quiet || git commit -m "Weekly data $(date -u +%G-%V) ($(date -u +%F))"
           git push
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          W=$(date -u +%G-%V)
+          FILES="data/changes/$W.csv data/changes/$W.json data/$W.json"
+          if gh release view "week-$W" > /dev/null 2>&1; then
+            gh release edit "week-$W" --notes-file release-notes.md
+            gh release upload "week-$W" $FILES --clobber
+          else
+            gh release create "week-$W" $FILES --title "Week $W" --notes-file release-notes.md
+          fi
