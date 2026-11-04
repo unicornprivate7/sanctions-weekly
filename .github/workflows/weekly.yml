@@ -1,0 +1,25 @@
+name: Weekly sanctions data
+on:
+  schedule:
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download weekly data
+        run: |
+          set -e
+          curl -fsS https://intel.unicornprivate.com/api/public/sanctions-weekly -o data/latest.json
+          python3 -m json.tool data/latest.json > /dev/null
+          cp data/latest.json "data/$(date -u +%G-%V).json"
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet || git commit -m "Weekly data $(date -u +%G-%V) ($(date -u +%F))"
+          git push

@@ -1,0 +1,25 @@
+{
+ "period": {
+  "from": "2026-10-29",
+  "to": "2026-11-04"
+ },
+ "generatedAt": "2026-11-04T01:50:30.153Z",
+ "totalNewEntries": 0,
+ "days": [
+  {
+   "date": "2026-11-03",
+   "newEntries": 0
+  },
+  {
+   "date": "2026-11-04",
+   "newEntries": 0
+  }
+ ],
+ "byCountry": {},
+ "byList": {},
+ "lists": {},
+ "source": "Daily comparison of the official sanctions lists monitored by Unicorn Intelligence. Aggregated counts only, no names.",
+ "license": "CC BY 4.0, attribution: Unicorn Intelligence (https://intel.unicornprivate.com)",
+ "page": "https://intel.unicornprivate.com/sanctions/today/",
+ "docs": "https://intel.unicornprivate.com/docs#public-sanctions-weekly"
+}
